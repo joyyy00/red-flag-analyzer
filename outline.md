@@ -16,7 +16,7 @@ PHASE 3: DATA ANALYSIS
 3. Word clouds or n-gram visualization
 
 PHASE 4: MODEL BUILDING
-Multi-label classification
+1. Multi-label classification
 
 PHASE 5: EVALUATION
 1. Measure model performance
@@ -26,5 +26,5 @@ PHASE 6: VISUALIZATION & REPORTS
 1. World Clouds: Common red flag terms
 2. Pie/bar chart of most frequent flag types
 
-PHASE 7: DEMO
+PHASE 7: DEMO & DEPLOYMENT
 
