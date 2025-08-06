@@ -16,7 +16,8 @@ PHASE 3: DATA ANALYSIS
 3. Word clouds or n-gram visualization
 
 PHASE 4: MODEL BUILDING
-1. Multi-label classification
+1. Start simple: Binary classification -> Is it a red flag or not?
+1. Expand: Multi-label classification -> Is it lovebombing, gaslighting, manipulating?
 
 PHASE 5: EVALUATION
 1. Measure model performance
