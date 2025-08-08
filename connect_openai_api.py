@@ -6,7 +6,7 @@ client = OpenAI(
 
 response = client.responses.create(
   model="gpt-4o-mini",
-  input="write a haiku about ai",
+  input="Assess whether these messages are red flags or neutral/green flags.",
   store=True,
 )
 
