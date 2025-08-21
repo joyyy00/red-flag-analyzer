@@ -1,5 +1,6 @@
 import praw
 import pandas as pd
+import os
 
 #create reddit instance
 reddit = praw.Reddit(
@@ -8,31 +9,50 @@ reddit = praw.Reddit(
     user_agent = 'joyotano'    #reddit username
 )
 
+subreddits = [
+    "dating",
+    "abusiverelationships",
+    "ToxicRelationships",
+    "relationships",
+    "Tinderpickuplines",
+    "tinderstories",
+    "AmIOverreacting",
+    "dating_advice"
+]
 
-### List of subreddits ###
-# dating
-# abusiverelationships
-# ToxicRelationships
-# relationships
-# Tinderpickuplines
-# tinderstories
-# relationships
-# AmIOverreacting
-
-subreddit_name = 'ToxicRelationships'
-
-#retrieve content in subreddit
+#retrieve content in subreddits
 content = []
-for submission in reddit.subreddit(subreddit_name).hot(limit=5):
-    print("Title:", submission.title)
-    print("Selftext:", submission.selftext)
-    print("-----")
-    # text = submission.selftext.strip()
-    # if len(text) > 0:
-    #     content.append(submission.selftext)
 
-df = pd.DataFrame(content, )
-df.to_csv('reddit_messages.csv', index=False)
+#retrieve posts
+for subreddit_name in subreddits:
+    for post in reddit.subreddit(subreddit_name).hot(limit=15):
+        text = post.selftext.strip()
+        
+        #check for mod posts and skip empty text
+        if post.distinguished == "moderator" or not text:
+            continue
 
-print("Saved messages to reddit_messages.csv")
+        content.append({
+            'PostID': post.id,
+            'Subreddit': subreddit_name,
+            'Text': text,
+            'Label': 'TBD'
+        })
+
+#dataframe
+df = pd.DataFrame(content)
+csv_file = 'reddit_messages.csv'
+
+#save/append to csv file
+if os.path.exists(csv_file):
+    existing_df = pd.read_csv(csv_file)
+    df = pd.concat([existing_df, df], ignore_index=True)
+    #remove duplicates
+    df.drop_duplicates(subset=['PostID'], inplace=True)
+
+# Add a clean numeric index ID for readability
+df.insert(0, 'ID', range(1, len(df) + 1))
+
+df.to_csv(csv_file, index=False)
+print(f"Saved {len(df)} total messages to {csv_file}")
 
