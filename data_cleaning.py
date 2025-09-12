@@ -1,12 +1,16 @@
+# handles raw to clean text
+
 import pandas as pd
 import re
 import string
 import unicodedata
 import contractions
 import nltk
-nltk.download("stopwords")
 from nltk.corpus import stopwords
-# from nltk.download import PorterStemmer
+nltk.download("stopwords")
+from nltk.stem import PorterStemmer
+nltk.download("wordnet")
+stemmer = PorterStemmer()
 
 def clean_text(text):
     # case standardization
@@ -34,20 +38,6 @@ def clean_text(text):
 
     return text
 
-
-def tokenize(text):
-    # whitespace tokenization
-    df = pd.read_csv("reddit_messages_cleaned.csv")
-    df["Tokens"] = df["Text"].str.split()
-
-    # remove stop words
-    stop_words = set(stopwords.words('english'))
-    df["Tokens"] = df["Tokens"].apply(lambda x: [word for word in x if word not in stop_words])
-
-    # stemming 
-    
-
-    # might add lemmatization later and compare model accuracy
 
 def main():
     # view labeled data
