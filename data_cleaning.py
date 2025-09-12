@@ -5,12 +5,6 @@ import re
 import string
 import unicodedata
 import contractions
-import nltk
-from nltk.corpus import stopwords
-nltk.download("stopwords")
-from nltk.stem import PorterStemmer
-nltk.download("wordnet")
-stemmer = PorterStemmer()
 
 def clean_text(text):
     # case standardization
