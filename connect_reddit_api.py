@@ -10,14 +10,15 @@ reddit = praw.Reddit(
 )
 
 subreddits = [
-    "dating",
-    "abusiverelationships",
-    "ToxicRelationships",
-    "relationships",
-    "Tinderpickuplines",
-    "tinderstories",
-    "AmIOverreacting",
-    "dating_advice"
+    # "dating",
+    # "abusiverelationships",
+    # "ToxicRelationships",
+    # "relationships",
+    # "Tinderpickuplines",
+    # "tinderstories",
+    # "AmIOverreacting",
+    # "dating_advice",
+    "love"
 ]
 
 #retrieve content in subreddits
@@ -32,11 +33,14 @@ for subreddit_name in subreddits:
         if post.distinguished == "moderator" or not text:
             continue
 
+        # automatically label green_flag for these subreddits or TBD if not
+        label = "green_flag" if subreddit_name in ["love"] else "TBD"
+
         content.append({
             'PostID': post.id,
             'Subreddit': subreddit_name,
             'Text': text,
-            'Label': 'TBD'
+            'Label': label
         })
 
 #dataframe
