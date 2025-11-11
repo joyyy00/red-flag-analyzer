@@ -8,5 +8,7 @@ Setup & Data Collection
 Data Pipeline
 - Data Cleaning & Preprocesing: Cleaned text using a script (data_cleaning.py)
 - Tokenization: Tokenized cleaned text into word lists by whitespace tokenization, removed stopwords using NLTK, applied stemming using PorterStemmer, yet to apply lemmatization (data_tokenization.py, reddit_messages_tokenized.csv)
-- Vectorization/Embedding:
-- 
+- Sources Used: https://www.kdnuggets.com/cleaning-and-preprocessing-text-data-in-pandas-for-nlp-tasks
+
+Vectorizing and Modeling: 
+- Loss function: Binary Cross Entroy Loss

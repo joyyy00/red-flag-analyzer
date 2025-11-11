@@ -25,7 +25,7 @@ content = []
 
 #retrieve posts
 for subreddit_name in subreddits:
-    for post in reddit.subreddit(subreddit_name).hot(limit=15):
+    for post in reddit.subreddit(subreddit_name).hot(limit=200):
         text = post.selftext.strip()
         
         #check for mod posts and skip empty text
@@ -51,7 +51,11 @@ if os.path.exists(csv_file):
     df.drop_duplicates(subset=['PostID'], inplace=True)
 
 # Add a clean numeric index ID for readability
-df.insert(0, 'ID', range(1, len(df) + 1))
+if 'ID' not in df.columns:
+    df.insert(0, 'ID', range(1, len(df) + 1))
+else:
+    # Reassign a fresh sequential ID to the combined dataset
+    df['ID'] = range(1, len(df) + 1)
 
 df.to_csv(csv_file, index=False)
 print(f"Saved {len(df)} total messages to {csv_file}")

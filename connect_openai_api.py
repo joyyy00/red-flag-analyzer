@@ -18,7 +18,7 @@ def label_text(text):
             model="gpt-4o-mini",
             messages=[
                 #assistant instruction
-                {"role": "system", "content": "You are an assistant that classifies relationship messages as red flags or neutral."},
+                {"role": "system", "content": "You are an assistant that classifies relationship messages and stories as red flags or neutral."},
                 #prompt
                 {"role": "user", "content": f"""Classify the following text into one of these two categories: {categories}. Text: \"{text}\" Respond ONLY with 'red_flag' or 'green_flag'."""}
             ],

@@ -37,19 +37,19 @@ def main():
     # view labeled data
     print("Original data")
     df = pd.read_csv("reddit_messages_labeled.csv")
-    print(df.head())
-    print(df.info())
+    print(df.head(), "\n")
+    df.info()
     print("-----------------------------------------------------------")
 
     # remove empty rows and duplicates
-    new_df = df.dropna(subset=["Text"]).drop_duplicates(subset=["Text"]) 
+    new_df = df.dropna(subset=["Text"]).drop_duplicates(subset=["Text"]).copy()
 
     # clean the text col and create new dataframe
     new_df["CleanText"] = new_df["Text"].apply(clean_text)
 
     print("Cleaned data")
-    print(new_df.head())
-    print(new_df.info())
+    print(new_df.head(), "\n")
+    new_df.info()
 
     #save cleaned data
     new_df.to_csv("reddit_messages_cleaned.csv", index=False)
