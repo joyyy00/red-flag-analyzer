@@ -10,25 +10,30 @@ def clean_text(text):
     # case standardization
     text = text.lower()
 
-    # standardize accent characters
-    text = unicodedata.normalize("NFKD", text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
-    
     # remove URLs
     text = re.sub(r'https?:\S*', '', text)
 
-    # keep letters, numbers, spaces, and ! ?  
-    text = re.sub(r"[^a-z0-9!?\. ]", " ", text)
+    # standardize accent characters
+    text = unicodedata.normalize("NFKD", text).encode('ascii', 'ignore').decode('utf-8', 'ignore')
+
+    # expanding contractions
+    text = contractions.fix(text)
+    # expanded_words = [contractions.fix(word) for word in text.split()]
+    # text = ' '.join(expanded_words) 
+
+    # remove age/gender patterns
+    text = re.sub(r'\b\d{2}[mf]\b', ' ', text)  #ex) 25m
+    text = re.sub(r'\b[mf]\d{2}\b', ' ', text)  #ex) m25
+    text = re.sub(r'[\(\[]\s*\d{2}[mf]\s*[\)\]]', ' ', text) #ex) ( 22m )
+
+    # keep letters, spaces, and ! ?  
+    text = re.sub(r'[^a-z!?\. ]', ' ', text)
 
     # remove extra spaces
-    text = re.sub(r"\s+", " ", text).strip()
+    text = re.sub(r'\s+', ' ', text).strip()
 
     # normalize ellipses 
-    text = re.sub(r"\.\.\.+", " ... ", text)
-    
-    # expanding contractions
-    expanded_words = [contractions.fix(word)
-                      for word in text.split()]
-    text = " ".join(expanded_words) 
+    text = re.sub(r'\.\.\.+', ' ... ', text)
 
     return text
 

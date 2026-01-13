@@ -26,7 +26,7 @@ content = []
 
 #retrieve posts
 for subreddit_name in subreddits:
-    for post in reddit.subreddit(subreddit_name).hot(limit=200):
+    for post in reddit.subreddit(subreddit_name).hot(limit=250):
         text = post.selftext.strip()
         
         #check for mod posts and skip empty text
