@@ -10,7 +10,9 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 
-# Dataset
+# =====================
+# Data Loading
+# =====================
 def loadData():
     df = pd.read_csv("reddit_messages_cleaned.csv")
     # use cleaned column for modeling
@@ -50,7 +52,7 @@ def tfidf(X_train, X_test):
 
 
 # Tracks training loss 
-def calculateNegativeLogLikelihood(X, y, weights, bias):
+def calculateNegativeLogLikelihood(X, y, weights, bias, l2=0.01):
   z = X @ weights + bias
   y_hat = np.reciprocal(1+np.exp(-z))
 
@@ -59,7 +61,8 @@ def calculateNegativeLogLikelihood(X, y, weights, bias):
 
   # calculate negative log likelihood
   nll = -np.mean(y * np.log(y_hat) + (1-y) * np.log(1-y_hat))
-  return nll
+  reg = (l2/2)*np.sum(weights ** 2)
+  return nll + reg
 
 
 # K cross validation - Compute accuracy for each split/fold
@@ -72,7 +75,7 @@ def crossValidate(X, y, k, lr=0.1, num_iter=1000):
 
         # Train your custom model
         model = CustomLogisticRegression(lr=lr, num_iter=num_iter)
-        model.fit(X_train, y_train)
+        model.train(X_train, y_train)
 
         # Predict and evaluate
         y_pred = model.predict(X_test)
@@ -84,7 +87,7 @@ def crossValidate(X, y, k, lr=0.1, num_iter=1000):
 
 # Logistic Regression Model
 class CustomLogisticRegression:
-    def __init__(self, lr=0.01, num_iter=1000):
+    def __init__(self, lr=0.01, num_iter=1000, l2 = 0.01):
         '''
         Hyperparameters:
         lr (learning rate): too large will cause divergence, too small will cause slow covergence
@@ -96,7 +99,8 @@ class CustomLogisticRegression:
         self.num_iter = num_iter
         self.weights = None
         self.bias = None
-    
+        self.l2 = l2
+
     def sigmoid(self, z):
         '''
         Logistic function - Sigmoid
@@ -105,7 +109,7 @@ class CustomLogisticRegression:
         z = np.clip(z, -20, 20)
         return 1 / (1 + np.exp(-z))
     
-    def fit(self, X, y):
+    def train(self, X, y):
         '''
         model training 
         '''        
@@ -130,6 +134,10 @@ class CustomLogisticRegression:
             # w.r.t. weights
             # dw = (1/n_samples) * X.T @ ((y_pred - y) * weights_vector)
             dw = (X.T @ ((y_pred - y) * weights_vector)) / np.sum(weights_vector)
+
+            #l2 regularization
+            dw += self.l2 * self.weights
+
             # w.r.t. bias
             # db = (1/n_samples) * np.sum((y_pred - y) * weights_vector)
             db = np.sum((y_pred - y) * weights_vector) / np.sum(weights_vector)
@@ -140,7 +148,7 @@ class CustomLogisticRegression:
             
             # calculate loss every 100 iterations
             if _ % 100 == 0:
-                loss = calculateNegativeLogLikelihood(X, y, self.weights, self.bias)
+                loss = calculateNegativeLogLikelihood(X, y, self.weights, self.bias, self.l2)
                 print(f"Iter {_}: loss={loss:.4f}")
     
 
@@ -164,7 +172,7 @@ def main():
     # Train via logistic regression 
     print("=========== Beginning Model Training ===========\n")
     model = CustomLogisticRegression(lr=0.01, num_iter=2000)
-    model.fit(X_train_tfidf, y_train.values)
+    model.train(X_train_tfidf, y_train.values)
 
     # Predict 
     y_pred = model.predict(X_test_tfidf)   
