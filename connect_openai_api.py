@@ -1,10 +1,13 @@
+import os
+from dotenv import load_dotenv
 from openai import OpenAI
 import pandas as pd
 import time
 
-client = OpenAI(
-  api_key="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"
-)
+load_dotenv()  # Load environment variables from .env file
+
+# Initialize OpenAI
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 ###############################
 # add a check for labeled csv file to see if TBD/unlabeled exists. This script only checks the 

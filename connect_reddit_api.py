@@ -1,12 +1,15 @@
+import os
+from dotenv import load_dotenv
 import praw
 import pandas as pd
-import os
 
-#create reddit instance
+load_dotenv()  # Load environment variables from .env file
+
+# Initialize Reddit (PRAW)
 reddit = praw.Reddit(
-    client_id = 'WJ0TiuKNOkBA6XWJbSXKAw',
-    client_secret = '4R-TFEB5lY1SmKBI2tNaWwQa712XCA',
-    user_agent = 'joyotano'    #reddit username
+    client_id=os.environ.get("REDDIT_CLIENT_ID"),
+    client_secret=os.environ.get("REDDIT_CLIENT_SECRET"),
+    user_agent='joyotano'
 )
 
 subreddits = [
