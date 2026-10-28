@@ -22,7 +22,7 @@ TOP_K_FEATURES = 15
 # Data Loading
 # =====================
 def loadData():
-    df = pd.read_csv("reddit_messages_cleaned.csv")
+    df = pd.read_csv("data/reddit_messages_cleaned.csv")
 
     # use cleaned column for modeling
     texts = df["CleanText"].astype(str)

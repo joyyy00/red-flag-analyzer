@@ -3,7 +3,7 @@ import pandas as pd
 # data labelings, counts, and empty rows
 print("TEST 1 ==================================")
 
-df = pd.read_csv("reddit_messages_cleaned.csv")
+df = pd.read_csv("data/reddit_messages_cleaned.csv")
 print("Columns:", df.columns.tolist())
 print("Label value counts:\n", df["Label"].value_counts(dropna=False))
 print("\nAny null Text?", df["CleanText"].isna().sum())

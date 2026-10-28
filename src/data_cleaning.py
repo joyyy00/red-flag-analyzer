@@ -41,7 +41,7 @@ def clean_text(text):
 def main():
     # view labeled data
     print("Original data")
-    df = pd.read_csv("reddit_messages_labeled.csv")
+    df = pd.read_csv("data/reddit_messages_labeled.csv")
     print(df.head(), "\n")
     df.info()
     print("-----------------------------------------------------------")
@@ -57,7 +57,7 @@ def main():
     new_df.info()
 
     #save cleaned data
-    new_df.to_csv("reddit_messages_cleaned.csv", index=False)
+    new_df.to_csv("data/reddit_messages_cleaned.csv", index=False)
 
 if __name__ == "__main__":
     main()

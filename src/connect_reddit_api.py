@@ -48,7 +48,7 @@ for subreddit_name in subreddits:
 
 #dataframe
 df = pd.DataFrame(content)
-csv_file = 'reddit_messages.csv'
+csv_file = 'data/reddit_messages.csv'
 
 #save/append to csv file
 if os.path.exists(csv_file):

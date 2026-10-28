@@ -13,7 +13,7 @@ Data Pipeline:
 - Sources Used: https://www.kdnuggets.com/cleaning-and-preprocessing-text-data-in-pandas-for-nlp-tasks
 
 Vectorizing and Modeling: 
-- Loss function: Binary Cross Entroy Loss
+- Loss function: Binary Cross Entropy Loss
 - Vectorization/Embedding:
   
 Modeling and Evaluation:

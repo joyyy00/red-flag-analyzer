@@ -9,13 +9,10 @@ load_dotenv()  # Load environment variables from .env file
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-###############################
-# add a check for labeled csv file to see if TBD/unlabeled exists. This script only checks the 
-# reddit_messages.csv which obviously has only TBD (besides auto labeled green_flags)
-###############################
+# This script only checks the reddit_messages.csv which obviously has only TBD (besides auto labeled green_flags)
 
 #CSV file
-df = pd.read_csv("reddit_messages.csv")
+df = pd.read_csv("data/reddit_messages.csv")
 
 categories=["red_flag", "green_flag"]
 
@@ -48,6 +45,6 @@ for idx, row in new_rows.iterrows():
     time.sleep(1)  # avoid hitting API rate limits
   
 # Save updated CSV
-output_file = "reddit_messages_labeled.csv"
+output_file = "data/reddit_messages_labeled.csv"
 df.to_csv(output_file, index=False)
 print(f"Labeled data saved to {output_file}")

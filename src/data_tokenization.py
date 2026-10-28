@@ -32,4 +32,4 @@ def tokenize(input_csv, output_csv):
 
 
 if __name__ == "__main__":
-    tokenize("reddit_messages_cleaned.csv", "reddit_messages_tokenized.csv")
+    tokenize("data/reddit_messages_cleaned.csv", "data/reddit_messages_tokenized.csv")
